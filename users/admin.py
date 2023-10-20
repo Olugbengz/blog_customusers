@@ -23,7 +23,7 @@ class CustomUserAdmin(UserAdmin):
 			"classes": ["wide"],
 			"fields":
 				["email", "first_name", "last_name", "date_of_birth", "password1", "password2"],},), ]
- 
+
 	ordering = ["email"]
 	search_fields = ["email"]
 	filter_horizontal = []

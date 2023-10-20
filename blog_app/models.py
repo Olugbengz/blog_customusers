@@ -27,7 +27,7 @@ class Blog(models.Model):
         return self.name
 
 
-class Post(models.Model):
+class BlogPost(models.Model):
     blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     description = models.TextField()
@@ -38,4 +38,7 @@ class Post(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.title
+        return (f'{self.title}\n'
+                f'{self.author}, {self.created_at}'
+                )
+
