@@ -29,4 +29,4 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     objects = CustomBaseUserManager()
     
     def __str__(self):
-        return self.email
+        return "%s %s" % (self.first_name, self.last_name)

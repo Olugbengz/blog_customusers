@@ -8,7 +8,7 @@ from .models import BlogPost
 
 def home(request):
     posts = BlogPost.objects.all()
-    return render(request, '../../users/templates/base.html', {posts: posts})
+    return render(request, 'home.html', {'posts': posts})
 
 
 def add_post(request):
@@ -17,7 +17,8 @@ def add_post(request):
     #     form = AddNewPostForm(request.POST)
     if request.method == 'POST':
         if form.is_valid():
-            add_post = form.save()
+            add_new_post = form.save(commit=False)
+            add_new_post.save()
             return redirect('home')
     return render(request, 'add_post.html', {'form': form})
 

@@ -11,11 +11,11 @@ class Category(models.Model):
         return self.name
 
 
-class Author(models.Model):
-    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.author
+# class Author(models.Model):
+#     author = models.ForeignKey(CustomUser, related_name='blog_creator', on_delete=models.CASCADE)
+#
+#     def __str__(self):
+#         return self.author
 
 
 class Blog(models.Model):
@@ -32,13 +32,11 @@ class BlogPost(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
     body = models.TextField(null=True, blank=True)
-    author = models.CharField(max_length=50, null=True, blank=True)
+    author = models.ManyToManyField(CustomUser)
     image = models.ImageField(null=True, blank=True, upload_to='images/')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return (f'{self.title}\n'
-                f'{self.author}, {self.created_at}'
-                )
+        return f'{self.title} {self.author} {self.created_at:%Y-%m-%d %H:%M}'
 

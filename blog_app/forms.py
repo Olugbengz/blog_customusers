@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import Textarea
-from .models import BlogPost, Blog, Author, Category
+from .models import BlogPost, Blog, Category
 
 
 class AddNewPostForm(forms.ModelForm):
