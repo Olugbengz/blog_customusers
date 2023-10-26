@@ -38,5 +38,5 @@ class BlogPost(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f'{self.title} {self.author} {self.created_at:%Y-%m-%d %H:%M}'
+        return f'{self.title} {self.author} {self.description} {self.created_at:%Y-%m-%d %H:%M}'
 
