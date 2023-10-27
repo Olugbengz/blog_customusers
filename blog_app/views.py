@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
 from .forms import AddNewPostForm
 from users.models import CustomUser
 from .models import BlogPost
@@ -24,8 +25,12 @@ def add_post(request):
 
 
 def display_post(request, pk):
-    this_post = BlogPost.objects.get(pk=pk)
-    return render(request, 'display_post.html', {'this_post': this_post})
+    if request.user.is_authenticated:
+        this_post = BlogPost.objects.get(pk=pk)
+        return render(request, 'display_post.html', {'this_post': this_post})
+    else:
+        messages.success(request, 'You need to login to view post details!')
+        return redirect('home')
 
 
 def update_post(request, pk):

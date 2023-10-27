@@ -1,24 +1,12 @@
 {% extends '..\..\users\templates\base.html' %}
 
 {%  block content %}
-<div>
-  {% if posts %}
-    <ul>
-      {% for post in posts %}
-      <li>
-        {{ post.title }} <br>
-        {{ post.description }} <br>
-        <small>
-          Posted by:
-          {% for author in post.author.all %}
-           {{ author }},
-          {% endfor %}
-          {{ post.created_at }}
-        </small>
-      </li>
-      <br>
-      {% endfor %}
-    </ul>
+<div class="col-md-8 offset-md-3">
+  {% if this_post %}
+  {% if user.is_authenticated %}
+  <h3>{{ this_post.title }}</h3>
+  <p>{{ this_post.body }}</p>
+  {% endif %}
   {% endif %}
 </div>
 {% endblock %}

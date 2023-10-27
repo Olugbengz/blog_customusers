@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<div class="col-md-6 offset-md-3">
+		<h4>You have successfully logged out!</h4>
+          <p>Thanks for showing up here.
+              <br>
+            <small>
+              <a class="text-muted" href="{% url 'login' %}">Login again!</a>
+            </small>
+</div>
+{% endblock %}
