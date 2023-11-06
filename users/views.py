@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views import View
+from django.views.generic import CreateView
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .forms import CustomUserCreationForm
@@ -29,7 +30,7 @@ def logout_user(request):
     logout(request)
     return render(request, 'logout_user.html')
 
-
+# Refactor all the views later and use generic view - django.views.generic
 class RegForm(View):
     form_class = CustomUserCreationForm
     initial = {'key': 'value'}

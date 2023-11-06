@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth import get_user_model
 from django.contrib import messages
 from .forms import AddNewPostForm
 from users.models import CustomUser
@@ -13,15 +14,17 @@ def home(request):
 
 
 def add_post(request):
-    form = AddNewPostForm(request.POST or None)
-    # if request.user.is_authenticated:
-    #     form = AddNewPostForm(request.POST)
-    if request.method == 'POST':
-        if form.is_valid():
-            add_new_post = form.save(commit=False)
-            add_new_post.save()
+    context = {}
+    form = AddNewPostForm(request.POST or None)   
+    if form.is_valid():
+        obj = form.save(commit=False)        
+        if request.user.is_authenticated:            
+            obj.save()
             return redirect('home')
-    return render(request, 'add_post.html', {'form': form})
+        else:
+            form.add_error(None, 'You must be logged in to add a post!')
+    context['form'] = form
+    return render(request, 'add_post.html', context)
 
 
 def display_post(request, pk):
