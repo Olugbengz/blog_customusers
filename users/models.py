@@ -22,7 +22,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         'first_name',
         'last_name',
         'date_of_birth',
-        'password',
         'created_at'
     ]
     

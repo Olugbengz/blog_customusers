@@ -3,6 +3,16 @@ from django.forms import Textarea
 from .models import BlogPost, Blog, Category
 
 
+
+# from django import forms
+# from .models import BlogPost
+
+# class AddNewPostForm(forms.ModelForm):
+#     class Meta:
+#         model = BlogPost
+#         fields = ['blog', 'title', 'description', 'body', 'author', 'image']
+
+
 class AddNewPostForm(forms.ModelForm):
     title = forms.CharField(required=True,
                             label="",

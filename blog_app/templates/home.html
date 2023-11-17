@@ -16,9 +16,8 @@
         {{ post.description }} <br>
         <small>
           Posted by:
-          {% for author in post.author.all %}
-           {{ author }},
-          {% endfor %}
+          {{ post.author.all|join:", " }}
+          
           {{ post.created_at }}
         </small>
       </li>
@@ -31,3 +30,5 @@
 
 </div>
 {% endblock %}
+
+

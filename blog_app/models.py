@@ -1,5 +1,7 @@
 from django.db import models
+from django.conf import settings
 from users.models import CustomUser
+
 
 # Create your models here.
 
@@ -32,7 +34,7 @@ class BlogPost(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
     body = models.TextField(null=True, blank=True)
-    author = models.ManyToManyField(CustomUser)
+    author = models.ManyToManyField(settings.AUTH_USER_MODEL)
     image = models.ImageField(null=True, blank=True, upload_to='images/')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
