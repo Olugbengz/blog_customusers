@@ -13,16 +13,14 @@ class CustomUserAdmin(UserAdmin):
 	list_display = ["email", "first_name", "last_name", "date_of_birth", "is_staff", "is_active", "is_admin"]
 	list_filter = ["is_admin"]
 	fieldsets = [
-		(None, {
-			"fields": ["email", "password"]}),
+		(None, {"fields": ["email", "password"]}),
 		("Personal info", {"fields": ["first_name", "last_name", "date_of_birth"]}),
 		("Permissions", {"fields": ["is_staff", "is_active", "is_admin"]}),
 		]
 	add_fieldsets = [
 		(None, {
 			"classes": ["wide"],
-			"fields":
-				["email", "first_name", "last_name", "date_of_birth", "password1", "password2"],},), ]
+			"fields": ["email", "first_name", "last_name", "date_of_birth", "password1", "password2"],},), ]
 
 	ordering = ["email"]
 	search_fields = ["email"]

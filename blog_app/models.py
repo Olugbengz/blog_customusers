@@ -13,11 +13,11 @@ class Category(models.Model):
         return self.name
 
 
-# class Author(models.Model):
-#     author = models.ForeignKey(CustomUser, related_name='blog_creator', on_delete=models.CASCADE)
-#
-#     def __str__(self):
-#         return self.author
+class Author(models.Model):
+    author = models.ForeignKey(CustomUser, related_name='blog_creator', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.author
 
 
 class Blog(models.Model):

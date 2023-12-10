@@ -7,22 +7,31 @@
      {% if posts %}
      <h3>Latest News</h3>
     <ul>
+    
       {% for post in posts %}
       <li>
+      
+        <a href="{% url 'post_details' post.id %}">
+            
+            {{ post.title }}
 
-        <a href="{% url 'post_details' post.id %}">{{ post.title }}</a>
-
+        </a>
+         
           <br>
         {{ post.description }} <br>
         <small>
           Posted by:
-          {{ post.author.all|join:", " }}
+          
+            {% for aut in post.author.all %}
+              {{ aut.first_name }} {{ aut.last_name }},
+            {% endfor %}
           
           {{ post.created_at }}
         </small>
       </li>
       <br>
       {% endfor %}
+      
     </ul>
   {% endif %}
  </div>

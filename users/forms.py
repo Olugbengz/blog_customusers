@@ -1,15 +1,17 @@
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django import forms
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
-from .models import CustomUser
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.core.exceptions import ValidationError
+
+from .models import CustomUser
+
 
 
 class CustomUserCreationForm(UserCreationForm):
-	email = forms.EmailField(label='Email')
-	first_name = forms.CharField(label='First Name', max_length=120)
-	last_name = forms.CharField(label='Last Name', max_length=120)
-	date_of_birth = forms.DateField(required=False)
+	# email = forms.EmailField(label='Email')
+	# first_name = forms.CharField(label='First Name', max_length=120)
+	# last_name = forms.CharField(label='Last Name', max_length=120)
+	# date_of_birth = forms.DateField(required=False)
 	password1 = forms.CharField(label='Password', min_length=8, max_length=50, widget=forms.PasswordInput)
 	password2 = forms.CharField(label='Confirm Password', min_length=8, max_length=50, widget=forms.PasswordInput)
 	
@@ -39,7 +41,7 @@ class CustomUserChangeForm(UserChangeForm):
 
 	class Meta:
 		model = CustomUser
-		fields = ['first_name', 'last_name', 'email', 'date_of_birth']
+		fields = ['email', 'first_name', 'last_name', 'date_of_birth', 'is_active', 'is_admin']
 
 
 
