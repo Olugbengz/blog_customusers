@@ -2,13 +2,15 @@
 {% load static %}
 
 {% block content %}
-<div class="col-md-6 offset-md-3">
-		<h1>Register</h1> <br />
-		<form method="POST">
+<div class="col-md-5 offset-md-3 bg-secondary p-4 my-4 rounded text-white">
+		<div class="mx-auto"><h1>Register</h1></div>	 
+		
+		<br />
+		<form method="POST" >
 			{% csrf_token %}
 			{{ form.as_p }} <br />
-			<button class="btn btn-outline-secondary" type="submit">
-				Register
+			<button class="btn btn-primary" type="submit">
+				Submit
 			</button>
 
 

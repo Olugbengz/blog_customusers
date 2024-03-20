@@ -1,3 +1,4 @@
+from typing import Any
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
 from .managers import CustomBaseUserManager
@@ -28,3 +29,12 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     
     def __str__(self):
         return "%s %s" % (self.first_name, self.last_name)
+    
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    date_modified = models.DateTimeField(CustomUser, auto_now=True)
+    profile_image = models.ImageField(null=True, blank=True, upload_to='images/')
+
+    def __str__(self):
+        return f"{self.user.first_name}'s profile."

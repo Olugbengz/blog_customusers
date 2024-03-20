@@ -1,3 +1,4 @@
+from typing import Any
 from django import forms
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
@@ -8,16 +9,30 @@ from .models import CustomUser
 
 
 class CustomUserCreationForm(UserCreationForm):
-	# email = forms.EmailField(label='Email')
-	# first_name = forms.CharField(label='First Name', max_length=120)
-	# last_name = forms.CharField(label='Last Name', max_length=120)
-	# date_of_birth = forms.DateField(required=False)
+	email = forms.EmailField(label="", widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Email Address'}))
+	first_name = forms.CharField(label="", max_length='100', widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'First Name'}))
+	last_name = forms.CharField(label="", max_length='100', widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Last Name'}))
+	date_of_birth = forms.DateField(label="", required=False, widget=forms.DateInput(attrs={'yype': 'date', 'class':'form-control', 'placeholder':'yyyy-mm-dd (DOB)'}))
 	password1 = forms.CharField(label='Password', min_length=8, max_length=50, widget=forms.PasswordInput)
 	password2 = forms.CharField(label='Confirm Password', min_length=8, max_length=50, widget=forms.PasswordInput)
 	
 	class Meta:
 		model = CustomUser
-		fields = ['first_name', 'last_name', 'email', 'date_of_birth']
+		fields = ['first_name', 'last_name', 'email', 'date_of_birth', 'password1', 'password2']
+
+	
+	def __init__(self, *args: Any, **kwargs: Any) -> None:
+		super(CustomUserCreationForm, self).__init__(*args, **kwargs)
+
+		self.fields['password1'].widget.attrs['class'] = 'form-control'
+		self.fields['password1'].widget.attrs['placeholder'] = 'Password'
+		self.fields['password1'].label = ''
+		self.fields['password1'].help_text = '<ul class="form-text text-white small"> <li>Your password can\'t be too similar to your personal information</li> <li>Your password must be at leaset eight digit long.</li></ul>' 
+
+		self.fields['password2'].widget.attrs['class'] = 'form-control'
+		self.fields['password2'].widget.attrs['placeholder'] = 'Confirm Password'
+		self.fields['password2'].label = ''
+		self.fields['password2'].help_text = '<ul class="form-text text-white small"> <li>Your password must match!</li></ul>'  
 
 	def clean_password2(self):
 		password1 = self.cleaned_data.get('password1')

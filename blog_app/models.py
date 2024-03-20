@@ -1,6 +1,8 @@
 from django.db import models
 from django.conf import settings
-from users.models import CustomUser
+
+
+User = settings.AUTH_USER_MODEL
 
 
 # Create your models here.
@@ -14,7 +16,7 @@ class Category(models.Model):
 
 
 class Author(models.Model):
-    author = models.ForeignKey(CustomUser, related_name='blog_creator', on_delete=models.CASCADE)
+    author = models.ForeignKey(User, related_name='blog_creator', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.author
@@ -34,7 +36,7 @@ class BlogPost(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
     body = models.TextField(null=True, blank=True)
-    author = models.ManyToManyField(settings.AUTH_USER_MODEL)
+    author = models.ManyToManyField(User)
     image = models.ImageField(null=True, blank=True, upload_to='images/')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

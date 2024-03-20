@@ -1,5 +1,6 @@
 from django import forms
 from django.forms import Textarea
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import BlogPost, Blog, Category
 from users.models import CustomUser
 
@@ -28,3 +29,8 @@ class AddNewPostForm(forms.ModelForm):
     class Meta:
         model = BlogPost
         fields = ['blog','title', 'description', 'body', 'author', 'image']
+
+
+class LoginForm(forms.ModelForm):
+    pass
+
