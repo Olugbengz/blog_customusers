@@ -9,17 +9,14 @@ from users.models import CustomUser
 from .models import BlogPost
 from django.urls import reverse_lazy
 
-# Create your views here.
-# @login_required(login_url='login')
+
+
 def home(request):
-    posts = BlogPost.objects.all()
+    posts = BlogPost.objects.all().order_by('-created_at')
     paginator = Paginator(posts, 6)
 
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-
-    # UserModel = get_user_model()
-    # author = UserModel.objects.all()
 
     return render(request, 'home.html', {'page_obj': page_obj})
 
@@ -41,25 +38,6 @@ def add_post(request):
     return render(request, 'add_post.html', {'form': form})
 
 
-# function based add_post
-# def add_post(request):
-#     form = AddNewPostForm()
-#     context = {}
-#     if request.user.is_authenticated:
-                
-#         form = AddNewPostForm(request.POST or None)
-#         if request.method == 'POST':
-#             if form.is_valid():
-#                 # authors = BlogPost.author.all()
-#                 form.save(commit=False)                    
-#                 form.save()
-#                 return redirect('home')
-#             else:
-#                 form.add_error(None, 'You must be logged in to add a post!')
-#     context['form'] = form
-#         # context['blog_authors'] = authors
-#     return render(request, 'add_post.html', context)
-
 # @login_required(login_url='login')
 def display_post(request, pk):    
     this_post = BlogPost.objects.get(pk=pk)
@@ -72,14 +50,13 @@ def update_post(request, pk):
     if request.user.is_authenticated:
         current_blog = get_object_or_404(BlogPost, pk=pk)
         # current_blog = BlogPost.objects.get(pk=pk)
-        form = AddNewPostForm(request.POST or None, request.Files, instance=current_blog)
+        form = AddNewPostForm(request.POST or None, request.FILES, instance=current_blog)
         if form.is_valid():
             current_blog = form.save()
             current_blog.save()
-            redirect('home')
-        return render(request, 'update_post.html', {'form': form})
-    else:
-        return redirect('home')
+            return redirect('home')
+    return render(request, 'update_post.html', {'form': form})
+    
     
 
 

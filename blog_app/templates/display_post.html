@@ -1,12 +1,50 @@
 {% extends '..\..\users\templates\base.html' %}
 
+{% load social_share %}
+
 {%  block content %}
-<div class="col-md-8 offset-md-3">
+<div class="col-md-8 offset-md-3" >
   {% if this_post %}
-  {% if user.is_authenticated %}
-  <h3>{{ this_post.title }}</h3>
-  <p>{{ this_post.body }}</p>
+  <div class="container" style="padding: 5% 15%;">
+    <div>
+      <h3>{{ this_post.title }}</h3>
+    </div>
+      <br>
+    <div>
+      <P>{{ this_post.description }}</P>
+    </div>
+  
+    <br>
+  
+     <div>
+      <p>{{ this_post.body }}</p>
+     </div>
+
+     <i class="fa fa-facebook-square" aria-hidden="true"></i>
+
+     <hr class="w-100 justify-content-md-center" style="margin-top: 80px;">
+    
+
+     <ul class="list-unstyled d-flex flex-row justify-content-around gap-3 p-2 bd-highlight">
+      <li class='list-group-item'>{% post_to_twitter "{{object.title}}. Check it out!" object_or_url "Post to Twitter!" %} </li> 
+      <li class='list-group-item'>{% post_to_linkedin object_or_url %}</li> 
+      <li class='list-group-item'>{% post_to_facebook object_or_url "Post to Facebook!" %}</li>
+      <li class='list-group-item'>{% send_email object.title "New Song: {{object.title}}. Check it out!" object_or_url "Share via email" %}</li>
+      <li class='list-group-item'>{% post_to_whatsapp object_or_url "Share via WhatsApp" %}</li>  
+     </ul>
+
+        
+      
+     
+        
+        
+
+
+   
+  </div>
+  
+
   {% endif %}
-  {% endif %}
+ 
 </div>
 {% endblock %}

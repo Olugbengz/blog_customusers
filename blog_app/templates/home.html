@@ -1,75 +1,71 @@
 {% extends '..\..\users\templates\base.html' %}
 
+
 {%  block content %}
 {% include 'hero.html' %}
-<div class="container">
+<div class="container" style="padding: 10% 8%;">
   <div class="row">
-    <h3>Latest News</h3>
-     {% if page_obj %}
-     {% for post in page_obj %}
-     
-        <div class="col-4 mb-4">
-          <div class="card" style="width: 18rem;">
-            <img src="..." class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">
-                <a href="{% url 'post_details' post.id %}">
-            
-                  {{ post.title|upper }}
-      
-              </a>
-              </h5>
-              <p class="card-text">{{ post.description }}</p>
-              <small>
-                Posted by:
-                
-                  {% for aut in post.author.all %}
-                    {{ aut.first_name }} {{ aut.last_name }},
-                  {% endfor %}
-                
-                {{ post.created_at }}
-              </small>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-          </div>
-
-        </div>
-     
-    <!-- <ul>
-    
-     
-      <li>
-      
-       
+    <div class="col-md-8">
+      <div class="row">
+        <h3>Latest News</h3>
+         {% if page_obj %}
+         {% for post in page_obj %}
          
-          <br>
-         <br>
+            <div class="col-lg-6 mb-4">
+              <div class="card" style="width: 18rem;">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">
+                    <a href="{% url 'post_details' post.id %}">
+                
+                      {{ post.title|upper }}
+          
+                  </a>
+                  </h5>
+                  <p class="card-text">{{ post.description }}</p>
+                  <small>
+                    Posted by:
+                    
+                      {% for aut in post.author.all %}
+                        {{ aut.first_name }} {{ aut.last_name }},
+                      {% endfor %}
+                    
+                    {{ post.created_at }}
+                  </small>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div>
+    
+            </div>
        
-      </li>
-      <br> -->
-      {% endfor %}
-      
-    <!-- </ul> -->
-  {% endif %}
- </div>
-
-    <div class="pagination">
-          <span class="step-links">
-          {% if page_obj.has_previous %}
-              <a href="?page=1">&laquo; first</a>
-              <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-          {% endif %}
-          <span class="current">
-              Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-          </span>
-          {% if page_obj.has_next %}
-              <a href="?page={{ page_obj.next_page_number }}">next</a>
-              <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-          {% endif %}
-        </span>
+          {% endfor %}
+        
+      {% endif %}
+     </div>
+    
+        <div class="pagination">
+              <span class="step-links">
+              {% if page_obj.has_previous %}
+                  <a href="?page=1">&laquo; first</a>
+                  <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+              {% endif %}
+              <span class="current">
+                  Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+              </span>
+              {% if page_obj.has_next %}
+                  <a href="?page={{ page_obj.next_page_number }}">next</a>
+                  <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+              {% endif %}
+            </span>
+        </div>
     </div>
+    <div class="col-md-4">
+        <h3 class="">Featured Posts</h3>
+    </div>
+  </div>
+  
 
-  <div class="col-md-4"></div>
+ 
 
 </div>
 {% endblock %}

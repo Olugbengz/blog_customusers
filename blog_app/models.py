@@ -1,5 +1,7 @@
 from django.db import models
 from django.conf import settings
+from django_ckeditor_5.fields import CKEditor5Field
+
 
 
 User = settings.AUTH_USER_MODEL
@@ -33,13 +35,13 @@ class Blog(models.Model):
 
 class BlogPost(models.Model):
     blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
-    title = models.CharField(max_length=255)
-    description = models.TextField()
-    body = models.TextField(null=True, blank=True)
+    title = models.CharField('Title', max_length=255, null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+    body = CKEditor5Field('Body', config_name='extends')
     author = models.ManyToManyField(User)
     image = models.ImageField(null=True, blank=True, upload_to='images/')
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
 
     def __str__(self):
         return f'{self.title} {self.author} {self.description} {self.created_at:%Y-%m-%d %H:%M}'

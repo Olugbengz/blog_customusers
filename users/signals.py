@@ -8,7 +8,7 @@ User = settings.AUTH_USER_MODEL
 @receiver(post_save, sender=User)
 def create_profile(sender, instance, created, **kwargs):
 
-    print(f"Sender is {sender} and Instance: {instance}")
+    # print(f"Sender is {sender} and Instance: {instance}")
     if created:
         UserProfile.objects.create(user=instance)
         
