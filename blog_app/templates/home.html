@@ -1,10 +1,12 @@
 {% extends '..\..\users\templates\base.html' %}
-
+{% load static %}
+{%  block title %}News{% endblock %}
+ 
 
 {%  block content %}
 {% include 'hero.html' %}
-<div class="container" style="padding: 10% 8%;">
-  <div class="row">
+<div class="w-80" style="padding: 10% 8%;">
+  <div class="row justify-content-lg-between">
     <div class="col-md-8">
       <div class="row">
         <h3>Latest News</h3>
@@ -12,27 +14,31 @@
          {% for post in page_obj %}
          
             <div class="col-lg-6 mb-4">
-              <div class="card" style="width: 18rem;">
-                <img src="..." class="card-img-top" alt="...">
-                <div class="card-body">
+              <div class="card shadow-sm p-3 mb-5 bg-body rounded" style="width: 22rem;">
+                {% if post.image %}
+                  <img src="{{post.image.url}}" class="card-img-top rounded" style="width: 100%; height:220px;" alt="Post Image">
+                {% else %}
+                  <img src="{% static '../media/images/port-project1.jpg' %}" class="card-img-top rounded" style="width: 100%; height:220px;" alt="Post Image">
+                {% endif %}
+                <div class="card-body" style="height: 180px">
                   <h5 class="card-title">
                     <a href="{% url 'post_details' post.id %}">
                 
-                      {{ post.title|upper }}
+                      {{ post.title|title }}
           
                   </a>
                   </h5>
                   <p class="card-text">{{ post.description }}</p>
-                  <small>
+                  <small class="text-muted">
                     Posted by:
                     
                       {% for aut in post.author.all %}
                         {{ aut.first_name }} {{ aut.last_name }},
                       {% endfor %}
                     
-                    {{ post.created_at }}
+                    On:  <i>{{ post.created_at }}</i>
                   </small>
-                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                  
                 </div>
               </div>
     
@@ -41,7 +47,7 @@
           {% endfor %}
         
       {% endif %}
-     </div>
+     </div>    
     
         <div class="pagination">
               <span class="step-links">
@@ -58,16 +64,83 @@
               {% endif %}
             </span>
         </div>
-    </div>
-    <div class="col-md-4">
-        <h3 class="">Featured Posts</h3>
-    </div>
-  </div>
+
+        <div class="w-100 border-top border-bottom pt-3 pb-2 mt-3">
+          <p class="" style="color: #494f5a; margin-left: 20px;">Web Development News</p>
+       </div>
+       <!-- Web Development News Section Start -->
+       <div class="row mt-5">
+       {% if dev_p_page_obj %}
+       {% for dev_p in dev_p_page_obj %}
+       
+          <div class="col-lg-6 mb-4 ">
+            <div class="card shadow-sm p-3 mb-5 bg-body rounded" style="width: 22rem;">
+              {% if dev_p.image %}
+                  <img src="{{dev_p.image.url}}" class="card-img-top rounded" style="width: 100%; height:220px;" alt="Post Image">
+                {% else %}
+                  <img src="{% static '../media/images/port-project1.jpg' %}" class="card-img-top rounded" style="width: 100%; height: 220px;" alt="Post Image">
+                {% endif %}
+              <div class="card-body" style="height: 180px;">
+                <h5 class="card-title">
+                  <a href="{% url 'post_details' dev_p.id %}">
+              
+                    {{ dev_p.title|title }}
+        
+                </a>
+                </h5>
+                <p class="card-text">{{ dev_p.description }}</p>
+                <small class="text-muted">
+
+                  Posted by:
+                  
+                    {% for aut in dev_p.author.all %}
+                      {{ aut.first_name }} {{ aut.last_name }},
+                    {% endfor %}
+                  
+                 On: <i>{{ dev_p.created_at }}</i>
+                </small>
+               
+              </div>
+            </div>
   
+          </div>
+     
+        {% endfor %}
+      
+    {% endif %}
+    </div>
 
- 
+    <div class="pagination">
+      <span class="step-links">
+      {% if dev_p_page_obj.has_previous %}
+          <a href="?page=1">&laquo; first</a>
+          <a href="?page={{ dev_p_page_obj.previous_page_number }}">previous</a>
+      {% endif %}
+      <span class="current">
+          Page {{ dev_p_page_obj.number }} of {{ dev_p_page_obj.paginator.num_pages }}.
+      </span>
+      {% if dev_p_page_obj.has_next %}
+          <a href="?page={{ dev_p_page_obj.next_page_number }}">next</a>
+          <a href="?page={{ dev_p_page_obj.paginator.num_pages }}">last &raquo;</a>
+      {% endif %}
+    </span>
+  </div>
+ </div>
 
-</div>
+ <!-- Web Development News Section End -->
+
+  <!-- Side Bar -->
+      <div class="col-lg-4">
+        <h3 class="">Category</h3>
+        
+        {% for cat in blog_cat %}
+        <ul class="list-unstyled text-left">
+            <li>{{cat.name}}</li>
+        </ul>
+        {% endfor %}
+      </div>
+    </div> 
+  </div>   
 {% endblock %}
 
 

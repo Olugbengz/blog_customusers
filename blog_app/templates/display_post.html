@@ -1,14 +1,28 @@
 {% extends '..\..\users\templates\base.html' %}
 
 {% load social_share %}
+{% load static %}
 
 {%  block content %}
-<div class="col-md-8 offset-md-3" >
+<div class="col-md-8 offset-md-3" style="padding: 5% 0; width: 784px;" >
   {% if this_post %}
-  <div class="container" style="padding: 5% 15%;">
+  <div class="container" >
     <div>
-      <h3>{{ this_post.title }}</h3>
-    </div>
+        {% if this_post.image %}
+        <div class="m-auto">
+          <img src="{{this_post.image.url}}" class="card-img-top" style="width: 500px; height: 500px;" alt="Post Image">
+        </div>
+              
+        {% else %}
+        <div class="m-auto">
+              <img src="{% static '../media/images/port-project1.jpg' %}" class="card-img-top" alt="Post Image">
+            </div>
+        {% endif %}
+      </div>
+      <br>
+      <div>
+        <h3>{{ this_post.title }}</h3>
+      </div>
       <br>
     <div>
       <P>{{ this_post.description }}</P>
@@ -16,11 +30,22 @@
   
     <br>
   
-     <div>
-      <p>{{ this_post.body }}</p>
-     </div>
+     
+      {{ this_post.body }}
 
-     <i class="fa fa-facebook-square" aria-hidden="true"></i>
+      <br/>
+      <br/>
+     
+
+    <div>
+      {% if this_post.comments.count %}
+          <p>Comments: <span>{{ this_post.comments.count }}</span></p>
+        {% else %}
+        {% if user.is_authenticated %}
+          Add comment ...
+        {% endif %}
+      {% endif %}
+    </div>
 
      <hr class="w-100 justify-content-md-center" style="margin-top: 80px;">
     
@@ -31,20 +56,41 @@
       <li class='list-group-item'>{% post_to_facebook object_or_url "Post to Facebook!" %}</li>
       <li class='list-group-item'>{% send_email object.title "New Song: {{object.title}}. Check it out!" object_or_url "Share via email" %}</li>
       <li class='list-group-item'>{% post_to_whatsapp object_or_url "Share via WhatsApp" %}</li>  
-     </ul>
-
-        
-      
-     
-        
-        
-
-
-   
+     </ul>  
   </div>
+  <br/>
+  <comment>
+    <form method="POST" action="{% url 'send_comment' this_post.id %}">
+      {% csrf_token %}
+      {{ comment_form.as_p }}
+      <button class="btn btn-outline-secondary" type="submit">Post Comment</button>
+    </form>
+    <br/>
+    
+    {% endif %}
+    {% if this_post.comments %}
+      {% for comment in this_post.comments.all %}
+      <div class="card mb-3" style="max-width: 540px;">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img src="..." class="img-fluid rounded-start" alt="...">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">{{ comment.comment_author }}</h5>
+              <p class="card-text">{{comment.comment_text}}</p>
+              <p class="card-text"><small class="text-muted">{{comment.created_at}}</small></p>
+            </div>
+          </div>
+        </div>
+      </div>
+        
+        
+      {% endfor %}
   
-
-  {% endif %}
+    {% endif %}
+  </comment>
+ 
  
 </div>
 {% endblock %}

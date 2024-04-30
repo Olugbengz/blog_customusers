@@ -6,13 +6,14 @@ from django.core.exceptions import ValidationError
 
 from .models import CustomUser
 
-
+#  date_of_birth = forms.DateField(widget = NumberInput(attrs={'type':'date'}))  
+# SelectDateWidget
 
 class CustomUserCreationForm(UserCreationForm):
 	email = forms.EmailField(label="", widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Email Address'}))
 	first_name = forms.CharField(label="", max_length='100', widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'First Name'}))
 	last_name = forms.CharField(label="", max_length='100', widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Last Name'}))
-	date_of_birth = forms.DateField(label="", required=False, widget=forms.DateInput(attrs={'yype': 'date', 'class':'form-control', 'placeholder':'yyyy-mm-dd (DOB)'}))
+	date_of_birth = forms.DateField(label="", required=False, widget=forms.NumberInput(attrs={'type': 'date', 'class':'form-control', 'placeholder':'yyyy-mm-dd (DOB)'}))
 	password1 = forms.CharField(label='Password', min_length=8, max_length=50, widget=forms.PasswordInput)
 	password2 = forms.CharField(label='Confirm Password', min_length=8, max_length=50, widget=forms.PasswordInput)
 	
